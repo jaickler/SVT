@@ -1,11 +1,11 @@
 # Defines the Election class that will be used to keep, run, and track a single election.
-from Candidate import Candidate
-from Ballot import Ballot
+from SVT.Candidate import Candidate
+from SVT.Ballot import Ballot
 from typing import List
 
 class Election:
 
-    title = ""
+    title:str = ""
     candidates:list[Candidate] = []
     ballots:list[Ballot] = []
 

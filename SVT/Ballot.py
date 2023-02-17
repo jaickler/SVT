@@ -1,6 +1,6 @@
 # Defines the ballot class to digest and store voter choices.
 
-from Candidate import Candidate
+from SVT.Candidate import Candidate
 
 class Ballot():
 
