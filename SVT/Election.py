@@ -14,6 +14,7 @@ class Election:
         self.title = election_name
 
     def add_candidate(self, candidate: Candidate):
+        candidate.id = len(self.candidates)
         self.candidates.append(candidate)
 
     def cast_ballot(self, ballot: Ballot):
