@@ -6,7 +6,7 @@ class Election:
     title = ""
     candidates = []
 
-    def __init__(self, election_name) -> None:
+    def __init__(self, election_name):
         ''' Constructor to set starting values of election. '''
         self.title = election_name
 

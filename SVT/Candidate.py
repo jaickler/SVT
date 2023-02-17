@@ -8,7 +8,7 @@ class Candidate:
     url = ""
     score = 0
 
-    def __init__(self, id_number, candidate_name, candidate_statement, candidate_url) -> None:
+    def __init__(self, id_number, candidate_name, candidate_statement, candidate_url):
         ''' Constructor to set initial values for a candidate object '''
 
         self.id = id_number
