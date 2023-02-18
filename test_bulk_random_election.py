@@ -19,11 +19,12 @@ class TestBulkElection(unittest.TestCase):
         election_name = "Test Election"
         test_election = Election(election_name)
 
-        # Creates 10 random candidates
+        # Creates lists for generating random candidates.
         first_names = ["Alice", "Bob", "Charlie", "David", "Eva", "Frank", "Grace", "Henry", "Isabella", "Jack"]
         last_names = ["Smith", "Johnson", "Williams", "Jones", "Brown", "Garcia", "Miller", "Davis", "Rodriguez", "Martinez"]
         foods = ["pizza", "sushi", "pasta", "burger", "tacos", "ramen", "steak", "salad", "curry", "seafood"]
 
+        # Creates 10 random candidates.
         for i in range(10):
             first_name = random.choice(first_names)
             last_name = random.choice(last_names)
@@ -33,14 +34,17 @@ class TestBulkElection(unittest.TestCase):
             person = {"name": full_name, "statement": statement}
             test_election.add_candidate(Candidate(person["name"], person["statement"], "https://github.com/jaickler/SVT"))
 
+        # Creates and casts 1000 ballots with random scores for each candidate.
         for i in range(0, 1000):
             temp_score:list[int] = []
             for j in range(0,10):
                 temp_score.append(random.randint(0,5))
             test_election.cast_ballot(Ballot(temp_score))
 
+        # Tallies the votes.
         test_result = test_election.tally_votes()
 
+        # Checks that the tally_votes function returns a valid Result object
         self.assertTrue(inspect.isclass(type(test_result)))
 
 

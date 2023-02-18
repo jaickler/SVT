@@ -7,19 +7,35 @@ from typing import List
 class Result:
     ''' Used to house the results of an election. '''
     def __init__(self, win_or_tie:str, candidates:list[Candidate]) -> None:
-        self.result = win_or_tie
-        self.candidates = candidates
+        ''' Creates a Result object containing a string of "win" or "tie" and a list of Candidate objects. '''
+
+        # Sets the result to "win" or "tie".
+        self.result:str = win_or_tie
+
+        # Sets the candidates list to be the winner or tied candidates.
+        self.candidates:list[Candidate] = candidates
 
 class Election:
-
+    ''' Class used to track and run a STAR election in a self contained object. '''
     def __init__(self, election_name):
         ''' Constructor to set starting values of election. '''
+        
+        # Sets the title of the Election.
         self.title = election_name
+
+        # Sets the list of candidates as an empty list.
         self.candidates:list[Candidate] = []
+
+        # Sets the list of ballots as an empty list.
         self.ballots:list[Ballot] = []
 
     def add_candidate(self, candidate: Candidate):
+        ''' Appends the candidate object to the candidates list for this election. '''
+
+        # Sets the candidate's id to its index in the candidates list.
         candidate.id = len(self.candidates)
+
+        # Adds candidate to candidates list.
         self.candidates.append(candidate)
 
     def disqualify_candidate(self, candidate_id:int):
@@ -66,9 +82,15 @@ class Election:
                 continue
         
         # Determines the result of the election and returns a Result object.
+
+        # Checks if the first candidate won.
         if self.candidates[0].ballots > self.candidates[1].ballots:
-            return Result("win", [self.candidates[0]])    
+            return Result("win", [self.candidates[0]])  
+
+        # Checks if the second candidate won.
         elif self.candidates[0].ballots < self.candidates[1].ballots:
             return Result("win", [self.candidates[1]])
+
+        # Reports tie if neither candidate had a higher score. Both scores must be equal.
         else:
             return Result("tie", [self.candidates[0], self.candidates[1]])
