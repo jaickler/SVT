@@ -1,6 +1,6 @@
 # Import Unit Test & Candidate Class
 import unittest
-from SVT.Election import Election
+from SVT.Election import Election, Result
 from SVT.Candidate import Candidate
 from SVT.Ballot import Ballot
 import sys
@@ -42,5 +42,39 @@ class TestElection(unittest.TestCase):
 
         self.assertEqual(test_election.ballots[0].id, 0)
 
+    def test_cast_ballot_append(self):
+        ''' Test that the cast_ballot function properly places multiple ballots on the list properly.'''
+        election_name = "Test Election"
+        test_election = Election(election_name)
+        test_election.add_candidate(Candidate("Richtofen", "115 is my favorite number", "https://github.com/jaickler/SVT"))
+        test_election.add_candidate(Candidate("Dempsey", "I hate the Dr.", "https://github.com/jaickler/SVT"))
+
+        for cast in range(0,5):
+            test_ballot = Ballot([cast,5])
+            test_election.cast_ballot(test_ballot)
+
+        self.assertEqual(test_election.ballots[4].candidates_scores[0], 4)
+
+    def test_tally_votes_win(self):
+        ''' Test to see if the tally_votes function can properly report a winning result. '''
+
+        # Sets up test election.
+        election_name = "Test Election"
+        test_election = Election(election_name)
+        test_election.add_candidate(Candidate("Richtofen", "115 is my favorite number", "https://github.com/jaickler/SVT"))
+        test_election.add_candidate(Candidate("Dempsey", "I hate the Dr.", "https://github.com/jaickler/SVT"))
+        test_election.add_candidate(Candidate("Bob", "We can fix it.", "https://github.com/jaickler/SVT"))
+
+        # Casts five ballots.
+        for cast in range(0,5):
+            test_ballot = Ballot([cast,5,0])
+            test_election.cast_ballot(test_ballot)
+
+        # Tallys the votes.
+        test_result:Result = test_election.tally_votes()
+
+        self.assertEqual(test_result.result+test_result.candidates[0].name, "winDempsey")
+
+        
 if __name__ == '__main__':
     unittest.main()

@@ -3,6 +3,12 @@ from SVT.Candidate import Candidate
 from SVT.Ballot import Ballot
 from typing import List
 
+class Result:
+    ''' Used to house the results of an election. '''
+    def __init__(self, win_or_tie:str, candidates:list[Candidate]) -> None:
+        self.result = win_or_tie
+        self.candidates = candidates
+
 class Election:
 
     def __init__(self, election_name):
@@ -28,3 +34,11 @@ class Election:
 
         # Adds ballot to the ballots list
         self.ballots.append(ballot)
+
+    def tally_votes(self) -> Result:
+        ''' Counts the votes and returns a Result'''
+
+        # Starts the Initial Score phase of the election.
+        self.candidates.sort(key = lambda x: x.score, reverse=True)
+        if self.candidates[0].score > self.candidates[1].score:
+            return Result("win", [self.candidates[0]])
