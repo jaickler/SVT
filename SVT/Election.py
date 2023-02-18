@@ -5,13 +5,11 @@ from typing import List
 
 class Election:
 
-    title:str = ""
-    candidates:list[Candidate] = []
-    ballots:list[Ballot] = []
-
     def __init__(self, election_name):
         ''' Constructor to set starting values of election. '''
         self.title = election_name
+        self.candidates:list[Candidate] = []
+        self.ballots:list[Ballot] = []
 
     def add_candidate(self, candidate: Candidate):
         candidate.id = len(self.candidates)
