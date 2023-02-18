@@ -11,3 +11,6 @@ class Candidate:
         self.url = candidate_url
         self.score:int = 0
         self.ballots:int = 0
+
+        # Defaults the candidate to be part of the election.
+        self.disqualified = False

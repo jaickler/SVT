@@ -22,6 +22,14 @@ class Election:
         candidate.id = len(self.candidates)
         self.candidates.append(candidate)
 
+    def disqualify_candidate(self, candidate_id:int):
+        ''' Sets the disqualified attribute of a candidate to True, removing them from election results. '''
+        self.candidates[candidate_id].disqualified = True
+
+    def reinstate_candidate(self, candidate_id:int):
+        ''' Sets the disqualified attribute of a candidate to False, allowing them to partake in the election. '''
+        self.candidates[candidate_id].disqualified = False
+
     def cast_ballot(self, ballot: Ballot):
         '''Adds the proper score to each candidate in the election.\n
         Then sets the ballot id and adds it to the ballots list.'''
@@ -38,10 +46,15 @@ class Election:
 
     def tally_votes(self) -> Result:
         ''' Counts the votes and returns a Result'''
-        candidate_list:list[Candidate] = []
-        finalists_id:list[dict]= []
+
+        # Sets disqualified candidates' scores to 0.
+        for candidate in self.candidates:
+            if candidate.disqualified == True:
+                candidate.score = 0
+
         # Starts the Initial Score phase of the election by sorting the candidates by score
         self.candidates.sort(key = lambda x: x.score, reverse=True)
+
 
         # Tallies the ballots of the top two scoring candidates.
         for ballot in self.ballots:
@@ -52,6 +65,7 @@ class Election:
             else:
                 continue
         
+        # Determines the result of the election and returns a Result object.
         if self.candidates[0].ballots > self.candidates[1].ballots:
             return Result("win", [self.candidates[0]])    
         elif self.candidates[0].ballots < self.candidates[1].ballots:
