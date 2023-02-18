@@ -10,3 +10,4 @@ class Candidate:
         self.statement = candidate_statement
         self.url = candidate_url
         self.score:int = 0
+        self.ballots:int = 0

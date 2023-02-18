@@ -71,10 +71,30 @@ class TestElection(unittest.TestCase):
             test_election.cast_ballot(test_ballot)
 
         # Tallys the votes.
-        test_result:Result = test_election.tally_votes()
+        self.test_result:Result = test_election.tally_votes()
 
-        self.assertEqual(test_result.result+test_result.candidates[0].name, "winDempsey")
+        self.assertEqual(self.test_result.result+self.test_result.candidates[0].name, "winDempsey")
 
-        
+    def test_tally_votes_tie(self):
+        ''' Test to see if the tally_votes function can properly report a tie result. '''
+
+        # Sets up test election.
+        election_name = "Test Election"
+        test_election = Election(election_name)
+        test_election.add_candidate(Candidate("Richtofen", "115 is my favorite number", "https://github.com/jaickler/SVT"))
+        test_election.add_candidate(Candidate("Dempsey", "I hate the Dr.", "https://github.com/jaickler/SVT"))
+        test_election.add_candidate(Candidate("Bob", "We can fix it.", "https://github.com/jaickler/SVT"))
+
+        # Casts five ballots.
+        for cast in range(0,5):
+            test_ballot = Ballot([cast,5,5])
+            test_election.cast_ballot(test_ballot)
+
+        # Tallys the votes.
+        self.test_result:Result = test_election.tally_votes()
+
+        self.assertEqual(self.test_result.result+self.test_result.candidates[0].name+self.test_result.candidates[1].name, "tieDempseyBob")
+
+
 if __name__ == '__main__':
     unittest.main()

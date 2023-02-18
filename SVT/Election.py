@@ -3,6 +3,7 @@ from SVT.Candidate import Candidate
 from SVT.Ballot import Ballot
 from typing import List
 
+
 class Result:
     ''' Used to house the results of an election. '''
     def __init__(self, win_or_tie:str, candidates:list[Candidate]) -> None:
@@ -37,8 +38,23 @@ class Election:
 
     def tally_votes(self) -> Result:
         ''' Counts the votes and returns a Result'''
-
-        # Starts the Initial Score phase of the election.
+        candidate_list:list[Candidate] = []
+        finalists_id:list[dict]= []
+        # Starts the Initial Score phase of the election by sorting the candidates by score
         self.candidates.sort(key = lambda x: x.score, reverse=True)
-        if self.candidates[0].score > self.candidates[1].score:
-            return Result("win", [self.candidates[0]])
+
+        # Tallies the ballots of the top two scoring candidates.
+        for ballot in self.ballots:
+            if ballot.candidates_scores[self.candidates[0].id] > ballot.candidates_scores[self.candidates[1].id]:
+                self.candidates[0].ballots += 1
+            elif ballot.candidates_scores[self.candidates[0].id] < ballot.candidates_scores[self.candidates[1].id]:
+                self.candidates[1].ballots += 1
+            else:
+                continue
+        
+        if self.candidates[0].ballots > self.candidates[1].ballots:
+            return Result("win", [self.candidates[0]])    
+        elif self.candidates[0].ballots < self.candidates[1].ballots:
+            return Result("win", [self.candidates[1]])
+        else:
+            return Result("tie", [self.candidates[0], self.candidates[1]])
