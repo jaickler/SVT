@@ -27,3 +27,14 @@ To install the tool you can use:
 ```
 pip install star-voting-tool
 ```
+<br />
+<br />
+
+___
+
+## Support the developer.
+<br />
+If you would like to support the further development of this tool you can buy me a coffee with the button below. Thank you for using this tool!
+<br />
+<br />
+<a href="https://www.buymeacoffee.com/weirdjake"><img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=&slug=weirdjake&button_colour=FFDD00&font_colour=000000&font_family=Cookie&outline_colour=000000&coffee_colour=ffffff" /></a>
