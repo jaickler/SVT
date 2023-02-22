@@ -2,6 +2,7 @@
 from SVT.Candidate import Candidate
 from SVT.Ballot import Ballot
 from typing import List
+import pickle
 
 
 class Result:
@@ -94,3 +95,15 @@ class Election:
         # Reports tie if neither candidate had a higher score. Both scores must be equal.
         else:
             return Result("tie", [self.candidates[0], self.candidates[1]])
+
+    def save_election(self, folder_path:str=""):
+        ''' Saves the election to a file using pickle. '''
+        with open(f"{folder_path}{self.title}.pickle", 'wb') as file:
+            pickle.dump(self, file, pickle.HIGHEST_PROTOCOL)
+        file.close()
+
+def load_election(file_name:str) -> Election:
+    ''' Loads an election from a file using pickle. '''
+    with open(file_name, 'rb') as file:
+        return pickle.load(file)
+
