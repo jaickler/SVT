@@ -3,6 +3,7 @@ from SVT.Candidate import Candidate
 from SVT.Ballot import Ballot
 from typing import List
 import pickle
+import csv
 
 
 class Result:
@@ -101,6 +102,19 @@ class Election:
         with open(f"{folder_path}{self.title}.pickle", 'wb') as file:
             pickle.dump(self, file, pickle.HIGHEST_PROTOCOL)
         file.close()
+
+    def load_candidates_from_csv(self, file_name:str, replace:bool=False) -> list[Candidate]:
+        ''' Loads any number of candidates to a list from a .csv file.
+         Candidates are ordered based on the order in the file.
+         Setting the replace parameter as True will replace all candidates in election. '''
+
+        if replace:
+            self.candidates= []
+
+        with open(file_name, 'r', newline='') as csvfile:
+            reader = csv.DictReader(csvfile)
+            for row in reader:
+                self.candidates.append(Candidate(row['candidate_name'], row['candidate_statement'], row['candidate_url']))
 
 def load_election(file_name:str) -> Election:
     ''' Loads an election from a file using pickle. '''
