@@ -1,5 +1,6 @@
 # Defines the Candidate class that will be used to keep the data for a single candidate.
 
+
 class Candidate:
 
     def __init__(self, candidate_name:str, candidate_statement:str, candidate_url:str):
@@ -24,3 +25,4 @@ class Candidate:
 
         # Defaults the candidate to be part of the election.
         self.disqualified:bool = False
+
