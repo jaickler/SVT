@@ -1,5 +1,7 @@
 # Defines the Candidate class that will be used to keep the data for a single candidate.
 
+import csv
+
 class Candidate:
 
     def __init__(self, candidate_name:str, candidate_statement:str, candidate_url:str):
@@ -24,3 +26,14 @@ class Candidate:
 
         # Defaults the candidate to be part of the election.
         self.disqualified:bool = False
+
+    def load_from_csv(file_name:str) -> list['Candidate']:
+        ''' Loads any number of candidates to a list from a .csv file.
+        Candidates are ordered based on the order in the file. '''
+
+        candidates:list['Candidate'] = []
+
+        with open(file_name, 'r', newline='') as csvfile:
+            reader = csv.DictReader(csvfile)
+            for row in reader:
+                candidates.append(Candidate(row['candidate_name'], row['candidate_statement'], row['candidate_url']))
